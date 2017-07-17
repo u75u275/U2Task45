@@ -26,10 +26,10 @@ public class Main {
 
     }
     /*************************** INSERT CONTRAGENT */
-    public Contragent insertContragent (int id, int siteid, String name,String identycode, ContragentType typeid, List<Address> addressList, Category category,List<Account>  accountList) {
+    public Contragent insertContragent (int id, int siteid, String name,String identycode, ContragentType typeid, List<Address> addressList, Category category) {
 
         PKContragentID tmp_pkcontragentID = new PKContragentID(id,siteid);
-        Contragent tmp_contragent = new Contragent(tmp_pkcontragentID,name,identycode,typeid,addressList, category,  accountList);
+        Contragent tmp_contragent = new Contragent(tmp_pkcontragentID,name,identycode,typeid,addressList, category);
         persistEntity(tmp_contragent);
         return tmp_contragent;
     }
@@ -79,14 +79,15 @@ public class Main {
 
         ArrayList<Contragent> hlp_ContragentList = new ArrayList<>();
         /******************************** данные для первого контрагента */
-        ContragentType hlp_contragenttype = new ContragentType ('1',"тип перший", 99);
+        ContragentType hlp_contragenttype = new ContragentType ('8',"тип перший", 99);
         Category hlp_category = new Category ("Категория перша", new Date(8888222));
          ArrayList<Address> hlp_adressslist1 = new ArrayList<>();
         hlp_adressslist1.add(new Address("ФРАНЦИЯ", "1", "1111", "11111", "111", "11",  "111"));
         hlp_adressslist1.add(new Address("ГЕРМАЦНЦИЯ", "1", "111", "111", "1111", "11",  "11111"));
-        ArrayList<Account> hlp_accountlist = new ArrayList<>();
-        Contragent hlp_contragent = m.insertContragent(1,300003,"ПЕРВЕНЕЦ П.П.", "111111111", hlp_contragenttype, hlp_adressslist1, hlp_category, hlp_accountlist);
+        //ArrayList<Account> hlp_accountlist = new ArrayList<>();
+        Contragent hlp_contragent = m.insertContragent(1,300003,"ПЕРВЕНЕЦ П.П.", "111111111", hlp_contragenttype, hlp_adressslist1, hlp_category);
         hlp_ContragentList.add(hlp_contragent);
+
         /******************************** данные для второго контрагента */
         ContragentType hlp_contragenttype2 = new ContragentType ('2',"тип другий", 99);
         Category hlp_category2 = new Category ("Категория друга", new Date(9999999));
@@ -95,13 +96,12 @@ public class Main {
         hlp_adressslist2.add(new Address("KERGUDU", "2", "222", "22222", "20", "222",  "2222"));
         hlp_adressslist2.add(new Address("PAMBUDU", "2", "222", "22222", "20", "222",  "2222"));
 
-
-     //   hlp_accountlist.add(new Account( new Date(), "26000023233", new Date(), new BigDecimal("12311212.11"),hlp_contragent));
-        hlp_contragent = m.insertContragent(2,200002,"ВТОРОЙ В.В.", "2222222", hlp_contragenttype2, hlp_adressslist2, hlp_category2,hlp_accountlist);
+        hlp_contragent = m.insertContragent(2,200002,"ВТОРОЙ В.В.", "2222222", hlp_contragenttype2, hlp_adressslist2, hlp_category2);
         hlp_ContragentList.add(hlp_contragent);
 
         /****************************** создание группы КА */
         ContragentGroup hlp_ContragentGroup = m.insertContragentGroup("Первая группа",hlp_ContragentList );
 
+        m.persistEntity(new Account( new Date(), "26000023233", new Date(), new BigDecimal("12311212.11"),hlp_contragent));
     }
 }

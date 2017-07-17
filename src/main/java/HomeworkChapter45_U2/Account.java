@@ -13,7 +13,7 @@ public class Account {
     private int id;
     private Date timeChange;
     private String accountno;
-    private Date dateopen;
+    private Date date_open;
     private BigDecimal summanow;
     private Contragent contragent;
 
@@ -21,10 +21,10 @@ public class Account {
 
     public Account() {}
 
-    public Account(Date timeChange, String accountno, Date dateopen, BigDecimal summa, Contragent contragent) {
+    public Account(Date timeChange, String accountno, Date dateopen, BigDecimal summanow,Contragent contragent) {
         this.timeChange = timeChange;
         this.accountno = accountno;
-        this.dateopen = dateopen;
+        this.date_open = dateopen;
         this.summanow = summanow;
         this.contragent = contragent;
     }
@@ -41,9 +41,6 @@ public class Account {
         return id;
     }
 
-    public Contragent getContragent() {
-        return contragent;
-    }
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "synctimestamp", nullable = false)
@@ -56,13 +53,23 @@ public class Account {
         return accountno;
     }
 
-    public Date getDateopen() {
-        return dateopen;
+    public Date getDate_open() {
+        return date_open;
     }
 
     @Column(name = "summanow", nullable = false)
     public BigDecimal getSummanow() {
         return summanow;
+    }
+
+    @ManyToOne
+    @JoinColumns(
+            {@JoinColumn(name = "CONTRAGENTID", referencedColumnName = "ID"),
+                    @JoinColumn(name = "SITEID", referencedColumnName = "SITEID")
+            }
+    )
+    public Contragent getContragent() {
+        return contragent;
     }
 
     // ******************************************************************************************************  setters
@@ -76,19 +83,19 @@ public class Account {
         this.accountno = accountno;
     }
 
-    public void setDateopen(Date dateopen) {
-        this.dateopen = dateopen;
+    public void setDate_open(Date date_open) {
+        this.date_open = date_open;
     }
 
     public void setSummanow(BigDecimal summanow) {
         this.summanow = summanow;
     }
 
-    public void setContragent(Contragent contragent) {
-        this.contragent = contragent;
-    }
-
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setContragent(Contragent contragent) {
+        this.contragent = contragent;
     }
 }

@@ -23,7 +23,7 @@ public class Contragent implements Serializable {
     // ******************************************************************************************************  constructors
     public Contragent(){}
 
-    public Contragent(PKContragentID contragentPK, String name, String identycode, ContragentType typeid, List<Address> addressList, Category category,List<Account>  accountList) {
+    public Contragent(PKContragentID contragentPK, String name, String identycode, ContragentType typeid, List<Address> addressList, Category category) {
         this.contragentPK = contragentPK;
         this.name = name;
         this.identycode = identycode;
@@ -69,7 +69,7 @@ public class Contragent implements Serializable {
         return addressList;
     }
 
-    @OneToMany(targetEntity = Account.class,cascade = {CascadeType.PERSIST})
+    @OneToMany(targetEntity = Account.class,cascade = {CascadeType.PERSIST}, mappedBy = "contragent")
     @PrimaryKeyJoinColumns({
             @PrimaryKeyJoinColumn(name="contragentid", referencedColumnName="id"),
             @PrimaryKeyJoinColumn(name="siteid", referencedColumnName="siteid")
